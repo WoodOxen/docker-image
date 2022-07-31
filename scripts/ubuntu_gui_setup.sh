@@ -1,9 +1,12 @@
 export USER_NAME=ubuntu
 export USER_ID=1000
 
-apt update
-apt install -y openssh-server xauth sudo
-apt clean
+export DEBIAN_FRONTEND=noninteractive
+
+apt-get update
+apt-get install -y openssh-server xauth sudo
+apt-get clean
+
 mkdir /var/run/sshd
 ssh-keygen -A
 sed -i "s/#Port 22/Port 10022/" /etc/ssh/sshd_config
