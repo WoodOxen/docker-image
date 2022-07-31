@@ -5,6 +5,7 @@ RUN \
     apt update \
     && apt install -y openssh-server \
                       xauth sudo \
+    && apt clean \
     && mkdir /var/run/sshd \
     && ssh-keygen -A \
     && sed -i "s/^.*PasswordAuthentication.*$/PasswordAuthentication yes/" /etc/ssh/sshd_config \
