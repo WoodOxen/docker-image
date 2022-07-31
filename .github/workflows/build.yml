@@ -1,0 +1,60 @@
+name: ci
+
+on: push
+
+env:
+  IMAGE_REGISTRY: "ghcr.io"
+  REGISTRY_USER: "${{ github.repository_owner }}"
+  REGISTRY_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+jobs:
+  build_docker_image:
+    runs-on: ubuntu-20.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        image_subdir:
+          [
+            "ubuntu20_gui",
+            "ubuntu18_cuda",
+            "ubuntu16_cuda",
+            "ubuntu20_cuda",
+          ]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: set lower case owner name
+        run: |
+          echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
+        env:
+          OWNER: '${{ github.repository_owner }}'
+
+      - name: Login docker
+        run: |
+          echo ${{ env.REGISTRY_TOKEN }} | docker login ${{ env.IMAGE_REGISTRY }} -u ${{ env.REGISTRY_USER }} --password-stdin
+
+      - name: configure name
+        run: |
+          version=$(jq -r .version docker_build/${{ matrix.image_subdir }}/metadata.json)
+          image_full_name=${{ env.IMAGE_REGISTRY }}/${{ env.OWNER_LC }}/${{ matrix.image_subdir }}:${version}
+          echo "image_full_name=$image_full_name" >> $GITHUB_ENV
+          echo ${image_full_name}
+
+      - name: build image
+        run: |
+          cd docker_build/${{ matrix.image_subdir }}
+          cp ../../scripts/ubuntu_gui_setup.sh .
+          docker build -t ${{ env.image_full_name }} .
+
+      - name: Push docker image
+        run: |
+          docker push ${{ env.image_full_name }}
+          docker manifest inspect ${{ env.image_full_name }} \
+            | jq '[.layers[] | .size] | add' | awk '{print "image size:",$1/1024/1024,"MB"}'
+
+      - name: Test image
+        run: |
+          bash docker_build/${{ matrix.image_subdir }}/test.sh ${{ env.image_full_name }}
+
