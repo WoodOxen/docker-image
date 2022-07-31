@@ -16,8 +16,10 @@ jobs:
       matrix:
         image_subdir:
           [
-            "ubuntu_gui",
+            "ubuntu20_gui",
             "ubuntu18_cuda",
+            "ubuntu16_cuda",
+            "ubuntu20_cuda",
           ]
 
     steps:
