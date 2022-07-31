@@ -18,6 +18,7 @@ jobs:
         image_subdir:
           [
             "ubuntu_gui",
+            "ubuntu18_cuda",
           ]
 
     steps:
