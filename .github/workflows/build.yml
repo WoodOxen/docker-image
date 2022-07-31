@@ -44,7 +44,7 @@ jobs:
         run: |
           cd docker_build/${{ matrix.image_subdir }}
           cp ../../scripts/ubuntu_gui_setup.sh .
-          docker build -t ${{ env.image_full_name }} docker_build/${{ matrix.image_subdir }}
+          docker build -t ${{ env.image_full_name }} .
 
       - name: Push docker image
         run: |
