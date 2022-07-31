@@ -6,7 +6,6 @@ env:
   IMAGE_REGISTRY: "ghcr.io"
   REGISTRY_USER: "${{ github.repository_owner }}"
   REGISTRY_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-  # IMAGE_REPO: "ghcr.io/${{ github.repository_owner }}"
 
 jobs:
   build_docker_image:
@@ -37,7 +36,7 @@ jobs:
       - name: configure name
         run: |
           version=$(jq -r .version docker_build/${{ matrix.image_subdir }}/metadata.json)
-          image_full_name=ghcr.io/${{ env.OWNER_LC }}/${{ matrix.image_subdir }}:${version}
+          image_full_name=${{ env.IMAGE_REGISTRY }}/${{ env.OWNER_LC }}/${{ matrix.image_subdir }}:${version}
           echo "image_full_name=$image_full_name" >> $GITHUB_ENV
           echo ${image_full_name}
 
