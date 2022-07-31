@@ -17,12 +17,7 @@ jobs:
       matrix:
         image_subdir:
           [
-            "rust_centos7",
-            "archlinux",
-            "rust_slim",
-            "cpp_centos7",
             "ubuntu_gui",
-            "python-mkl",
           ]
 
     steps:
