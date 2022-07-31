@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM nvidia/cuda:11.0.3-devel-ubuntu18.04
 ARG USER_NAME=ubuntu
 ARG USER_ID=1000
 RUN \
