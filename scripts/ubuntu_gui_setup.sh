@@ -6,6 +6,7 @@ apt install -y openssh-server xauth sudo
 apt clean
 mkdir /var/run/sshd
 ssh-keygen -A
+sed -i "s/#Port 22/Port 10022/" /etc/ssh/sshd_config
 sed -i "s/^.*PasswordAuthentication.*$/PasswordAuthentication yes/" /etc/ssh/sshd_config
 sed -i "s/^.*X11Forwarding.*$/X11Forwarding yes/" /etc/ssh/sshd_config
 sed -i "s/^.*X11UseLocalhost.*$/X11UseLocalhost no/" /etc/ssh/sshd_config
