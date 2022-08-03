@@ -1,10 +1,9 @@
 FROM nvidia/cuda:11.0.3-devel-ubuntu16.04
-COPY setup.sh /
+COPY ssh_only_setup.sh /
 COPY resolv.conf /
 COPY sshd_config /
-COPY xstartup /
 RUN bash /ssh_only_setup.sh
 ENTRYPOINT ["sh", "-c", "/usr/sbin/sshd && tail -f /dev/null"]
 LABEL maintainer="LYY"
-LABEL OS="ubuntu-18.04"
+LABEL OS="ubuntu-16.04"
 LABEL cuda="11.0.3"
