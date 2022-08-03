@@ -15,9 +15,9 @@ ssh-keygen -t rsa
 mv /sshd_config /etc/ssh/sshd_config
 
 # configure vnc with gnome desktop
-apt-get install -y vnc4server
 apt-get instal -y ubuntu-desktop
 apt-get install -y gnome-core gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal
+apt-get install -y vnc4server
 mv /xstartup /home/${USER_NAME}/.vnc/xstartup
 
 # configure some recommended tools
