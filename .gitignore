@@ -1,1 +1,3 @@
-docker_build/*/ubuntu_gui_setup.sh
+docker_build/*/setup.sh
+docker_build/*/ssh_setup.sh
+docker_build/*/config/

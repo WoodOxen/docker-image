@@ -1,0 +1,6 @@
+FROM nvidia/cuda:11.0.3-devel-ubuntu18.04
+COPY setup.sh /
+COPY ./configs/ /
+RUN bash /setup.sh
+ENTRYPOINT ["sh", "-c", "/usr/sbin/sshd && tail -f /dev/null"]
+LABEL maintainer="LYY"
