@@ -8,7 +8,7 @@
 [ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
 xsetroot -solid grey
 vncconfig -iconic &
-x-terminal-emulator -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
+x-terminal-emulator -geometry 1920x1080 -ls -title "$VNCDESKTOP Desktop" &
 x-window-manager &
 
 #These are newly added commands

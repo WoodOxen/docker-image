@@ -43,7 +43,7 @@ jobs:
       - name: configure name
         run: |
           version=$(jq -r .version docker_build/${{ matrix.image_subdir }}/metadata.json)
-          image_full_name=${{ env.IMAGE_REGISTRY }}/${{ matrix.image_subdir }}/${{ matrix.image_subdir }}:${version}
+          image_full_name=${{ env.IMAGE_REGISTRY }}/${{ env.OWNER_LC }}/${{ matrix.image_subdir }}:${version}
           echo "image_full_name=$image_full_name" >> $GITHUB_ENV
           echo ${image_full_name}
 
