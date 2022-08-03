@@ -1,4 +1,4 @@
-name: ci
+name: CI
 
 on:
   push:
@@ -15,17 +15,17 @@ env:
 
 jobs:
   build_docker_image:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
 
     strategy:
       fail-fast: false
       matrix:
         image_subdir:
           [
-            "ubuntu20_gui",
-            "ubuntu18_cuda",
-            "ubuntu16_cuda",
-            "ubuntu20_cuda",
+            "ubuntu20_ssh",
+            "ubuntu18_ssh",
+            "ubuntu16_ssh",
+            "ubuntu18_vnc",
           ]
 
     steps:
@@ -37,7 +37,7 @@ jobs:
         env:
           OWNER: '${{ github.repository_owner }}'
 
-      - name: Login docker
+      - name: login docker
         run: |
           echo ${{ env.REGISTRY_TOKEN }} | docker login ${{ env.IMAGE_REGISTRY }} -u ${{ env.REGISTRY_USER }} --password-stdin
 
@@ -51,16 +51,18 @@ jobs:
       - name: build image
         run: |
           cd docker_build/${{ matrix.image_subdir }}
-          cp ../../scripts/ubuntu_gui_setup.sh .
+          cp ../../scripts/ssh_only_setup.sh .
+          cp ../../scripts/setup.sh .
+          cp -r ../../configs .
           docker build -t ${{ env.image_full_name }} .
 
-      - name: Push docker image
+      - name: push docker image
         run: |
           docker push ${{ env.image_full_name }}
           docker manifest inspect ${{ env.image_full_name }} \
             | jq '[.layers[] | .size] | add' | awk '{print "image size:",$1/1024/1024,"MB"}'
 
-      - name: Test image
+      - name: test image
         run: |
           bash docker_build/${{ matrix.image_subdir }}/test.sh ${{ env.image_full_name }}
 
