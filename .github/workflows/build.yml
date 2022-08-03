@@ -53,7 +53,7 @@ jobs:
           cd docker_build/${{ matrix.image_subdir }}
           cp ../../scripts/ssh_only_setup.sh .
           cp ../../scripts/setup.sh .
-          cp -r ../../configs .
+          cp -r ../../configs ./
           docker build -t ${{ env.image_full_name }} .
 
       - name: push docker image
