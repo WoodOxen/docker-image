@@ -12,10 +12,13 @@ apt-get install -y openssh-server xauth
 
 mkdir /var/run/sshd
 ssh-keygen -t rsa
+echo "line 15"
 mv /sshd_config /etc/ssh/sshd_config
 
 # configure network related stuffs
+echo "line 19"
 mv /resolv.conf /etc/resolv.conf
+echo "line 21"
 sudo sed -i 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
 apt-get update
 
