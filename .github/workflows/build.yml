@@ -24,7 +24,7 @@ jobs:
             "ubuntu20_ssh",
             "ubuntu18_ssh",
             "ubuntu16_ssh",
-            "ubuntu18_vnc",
+            "ubuntu18_xrdp",
           ]
 
     steps:

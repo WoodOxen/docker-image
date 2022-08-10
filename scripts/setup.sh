@@ -18,7 +18,9 @@ mv /sshd_config /etc/ssh/sshd_config
 apt-get instal -y ubuntu-desktop
 apt-get install -y gnome-core gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal
 apt-get install -y vnc4server
+vncserver :1
 mv /xstartup /home/${USER_NAME}/.vnc/xstartup
+vncserver -kill :1
 
 # configure some recommended tools
 apt-get install -y vim tmux net-tools
